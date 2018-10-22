@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/app.css" rel="stylesheet" />
+		
+	</head>
+
+	<body>
+		<div id="app" style="height: 100%;">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<button type="button" class="mui-right mui-btn mui-btn-link mui-btn-nav mui-pull-right" v-show="address.length" @click="clkSave">
+					完成
+				</button>
+				<h1 class="mui-center mui-title">{{currentTreeData.division}}</h1>
+			</div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<div class="mui-input-row" v-if="!currentTreeData.children||currentTreeData.children.length===0">
+							<label style="width: 0;padding:0;"></label>
+							<input style="width:100%;padding-left:10px;font-size:inherit;" class="mui-input-clear" type="text" placeholder="请输入乡镇地址" v-model="address">
+						</div>
+						<li class="mui-table-view-cell" v-else v-for="item in currentTreeData.children" @click="clkTreeItem(item)">
+							<a :class="{'mui-navigate-right':item.children&&item.children.length>0}">{{item.division}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script>
+		(function($, doc) {
+			var treeData = [{"divCode":"350000","division":"福建省","parentCode":"0","children":[{"divCode":"350100","division":"福州市","parentCode":"350000","children":[{"divCode":"350101","division":"福州市辖区","parentCode":"350100","children":null,"id":"350101","parentId":"350100"},{"divCode":"350102","division":"鼓楼区","parentCode":"350100","children":null,"id":"350102","parentId":"350100"},{"divCode":"350103","division":"台江区","parentCode":"350100","children":null,"id":"350103","parentId":"350100"},{"divCode":"350104","division":"仓山区","parentCode":"350100","children":null,"id":"350104","parentId":"350100"},{"divCode":"350105","division":"马尾区","parentCode":"350100","children":null,"id":"350105","parentId":"350100"},{"divCode":"350111","division":"晋安区","parentCode":"350100","children":null,"id":"350111","parentId":"350100"},{"divCode":"350121","division":"闽侯县","parentCode":"350100","children":null,"id":"350121","parentId":"350100"},{"divCode":"350122","division":"连江县","parentCode":"350100","children":null,"id":"350122","parentId":"350100"},{"divCode":"350123","division":"罗源县","parentCode":"350100","children":null,"id":"350123","parentId":"350100"},{"divCode":"350124","division":"闽清县","parentCode":"350100","children":null,"id":"350124","parentId":"350100"},{"divCode":"350125","division":"永泰县","parentCode":"350100","children":null,"id":"350125","parentId":"350100"},{"divCode":"350128","division":"平潭县","parentCode":"350100","children":null,"id":"350128","parentId":"350100"},{"divCode":"350181","division":"福清市","parentCode":"350100","children":null,"id":"350181","parentId":"350100"},{"divCode":"350182","division":"长乐市","parentCode":"350100","children":null,"id":"350182","parentId":"350100"}],"id":"350100","parentId":"350000"},{"divCode":"350200","division":"厦门市","parentCode":"350000","children":[{"divCode":"350201","division":"厦门市辖区","parentCode":"350200","children":null,"id":"350201","parentId":"350200"},{"divCode":"350203","division":"思明区","parentCode":"350200","children":null,"id":"350203","parentId":"350200"},{"divCode":"350205","division":"海沧区","parentCode":"350200","children":null,"id":"350205","parentId":"350200"},{"divCode":"350206","division":"湖里区","parentCode":"350200","children":null,"id":"350206","parentId":"350200"},{"divCode":"350211","division":"集美区","parentCode":"350200","children":null,"id":"350211","parentId":"350200"},{"divCode":"350212","division":"同安区","parentCode":"350200","children":null,"id":"350212","parentId":"350200"},{"divCode":"350213","division":"翔安区","parentCode":"350200","children":null,"id":"350213","parentId":"350200"}],"id":"350200","parentId":"350000"},{"divCode":"350300","division":"莆田市","parentCode":"350000","children":[{"divCode":"350301","division":"莆田市辖区","parentCode":"350300","children":null,"id":"350301","parentId":"350300"},{"divCode":"350302","division":"城厢区","parentCode":"350300","children":null,"id":"350302","parentId":"350300"},{"divCode":"350303","division":"涵江区","parentCode":"350300","children":null,"id":"350303","parentId":"350300"},{"divCode":"350304","division":"荔城区","parentCode":"350300","children":null,"id":"350304","parentId":"350300"},{"divCode":"350305","division":"秀屿区","parentCode":"350300","children":null,"id":"350305","parentId":"350300"},{"divCode":"350322","division":"仙游县","parentCode":"350300","children":null,"id":"350322","parentId":"350300"}],"id":"350300","parentId":"350000"},{"divCode":"350400","division":"三明市","parentCode":"350000","children":[{"divCode":"350401","division":"三明市辖区","parentCode":"350400","children":null,"id":"350401","parentId":"350400"},{"divCode":"350402","division":"梅列区","parentCode":"350400","children":null,"id":"350402","parentId":"350400"},{"divCode":"350403","division":"三元区","parentCode":"350400","children":null,"id":"350403","parentId":"350400"},{"divCode":"350421","division":"明溪县","parentCode":"350400","children":null,"id":"350421","parentId":"350400"},{"divCode":"350423","division":"清流县","parentCode":"350400","children":null,"id":"350423","parentId":"350400"},{"divCode":"350424","division":"宁化县","parentCode":"350400","children":null,"id":"350424","parentId":"350400"},{"divCode":"350425","division":"大田县","parentCode":"350400","children":null,"id":"350425","parentId":"350400"},{"divCode":"350426","division":"尤溪县","parentCode":"350400","children":null,"id":"350426","parentId":"350400"},{"divCode":"350427","division":"沙县","parentCode":"350400","children":null,"id":"350427","parentId":"350400"},{"divCode":"350428","division":"将乐县","parentCode":"350400","children":null,"id":"350428","parentId":"350400"},{"divCode":"350429","division":"泰宁县","parentCode":"350400","children":null,"id":"350429","parentId":"350400"},{"divCode":"350430","division":"建宁县","parentCode":"350400","children":null,"id":"350430","parentId":"350400"},{"divCode":"350481","division":"永安市","parentCode":"350400","children":null,"id":"350481","parentId":"350400"}],"id":"350400","parentId":"350000"},{"divCode":"350500","division":"泉州市","parentCode":"350000","children":[{"divCode":"350501","division":"泉州市辖区","parentCode":"350500","children":null,"id":"350501","parentId":"350500"},{"divCode":"350502","division":"鲤城区","parentCode":"350500","children":null,"id":"350502","parentId":"350500"},{"divCode":"350503","division":"丰泽区","parentCode":"350500","children":null,"id":"350503","parentId":"350500"},{"divCode":"350504","division":"洛江区","parentCode":"350500","children":null,"id":"350504","parentId":"350500"},{"divCode":"350505","division":"泉港区","parentCode":"350500","children":null,"id":"350505","parentId":"350500"},{"divCode":"350521","division":"惠安县","parentCode":"350500","children":null,"id":"350521","parentId":"350500"},{"divCode":"350524","division":"安溪县","parentCode":"350500","children":null,"id":"350524","parentId":"350500"},{"divCode":"350525","division":"永春县","parentCode":"350500","children":null,"id":"350525","parentId":"350500"},{"divCode":"350526","division":"德化县","parentCode":"350500","children":null,"id":"350526","parentId":"350500"},{"divCode":"350527","division":"金门县","parentCode":"350500","children":null,"id":"350527","parentId":"350500"},{"divCode":"350581","division":"石狮市","parentCode":"350500","children":null,"id":"350581","parentId":"350500"},{"divCode":"350582","division":"晋江市","parentCode":"350500","children":null,"id":"350582","parentId":"350500"},{"divCode":"350583","division":"南安市","parentCode":"350500","children":null,"id":"350583","parentId":"350500"}],"id":"350500","parentId":"350000"},{"divCode":"350600","division":"漳州市","parentCode":"350000","children":[{"divCode":"350601","division":"漳州市辖区","parentCode":"350600","children":null,"id":"350601","parentId":"350600"},{"divCode":"350602","division":"芗城区","parentCode":"350600","children":null,"id":"350602","parentId":"350600"},{"divCode":"350603","division":"龙文区","parentCode":"350600","children":null,"id":"350603","parentId":"350600"},{"divCode":"350622","division":"云霄县","parentCode":"350600","children":null,"id":"350622","parentId":"350600"},{"divCode":"350623","division":"漳浦县","parentCode":"350600","children":null,"id":"350623","parentId":"350600"},{"divCode":"350624","division":"诏安县","parentCode":"350600","children":null,"id":"350624","parentId":"350600"},{"divCode":"350625","division":"长泰县","parentCode":"350600","children":null,"id":"350625","parentId":"350600"},{"divCode":"350626","division":"东山县","parentCode":"350600","children":null,"id":"350626","parentId":"350600"},{"divCode":"350627","division":"南靖县","parentCode":"350600","children":null,"id":"350627","parentId":"350600"},{"divCode":"350628","division":"平和县","parentCode":"350600","children":null,"id":"350628","parentId":"350600"},{"divCode":"350629","division":"华安县","parentCode":"350600","children":null,"id":"350629","parentId":"350600"},{"divCode":"350681","division":"龙海市","parentCode":"350600","children":null,"id":"350681","parentId":"350600"}],"id":"350600","parentId":"350000"},{"divCode":"350700","division":"南平市","parentCode":"350000","children":[{"divCode":"350701","division":"南平市辖区","parentCode":"350700","children":null,"id":"350701","parentId":"350700"},{"divCode":"350702","division":"延平区","parentCode":"350700","children":null,"id":"350702","parentId":"350700"},{"divCode":"350721","division":"顺昌县","parentCode":"350700","children":null,"id":"350721","parentId":"350700"},{"divCode":"350722","division":"浦城县","parentCode":"350700","children":null,"id":"350722","parentId":"350700"},{"divCode":"350723","division":"光泽县","parentCode":"350700","children":null,"id":"350723","parentId":"350700"},{"divCode":"350724","division":"松溪县","parentCode":"350700","children":null,"id":"350724","parentId":"350700"},{"divCode":"350725","division":"政和县","parentCode":"350700","children":null,"id":"350725","parentId":"350700"},{"divCode":"350781","division":"邵武市","parentCode":"350700","children":null,"id":"350781","parentId":"350700"},{"divCode":"350782","division":"武夷山市","parentCode":"350700","children":null,"id":"350782","parentId":"350700"},{"divCode":"350783","division":"建瓯市","parentCode":"350700","children":null,"id":"350783","parentId":"350700"},{"divCode":"350784","division":"建阳市","parentCode":"350700","children":null,"id":"350784","parentId":"350700"}],"id":"350700","parentId":"350000"},{"divCode":"350800","division":"龙岩市","parentCode":"350000","children":[{"divCode":"350801","division":"龙岩市辖区","parentCode":"350800","children":null,"id":"350801","parentId":"350800"},{"divCode":"350802","division":"新罗区","parentCode":"350800","children":null,"id":"350802","parentId":"350800"},{"divCode":"350821","division":"长汀县","parentCode":"350800","children":null,"id":"350821","parentId":"350800"},{"divCode":"350822","division":"永定县","parentCode":"350800","children":null,"id":"350822","parentId":"350800"},{"divCode":"350823","division":"上杭县","parentCode":"350800","children":null,"id":"350823","parentId":"350800"},{"divCode":"350824","division":"武平县","parentCode":"350800","children":null,"id":"350824","parentId":"350800"},{"divCode":"350825","division":"连城县","parentCode":"350800","children":null,"id":"350825","parentId":"350800"},{"divCode":"350881","division":"漳平市","parentCode":"350800","children":null,"id":"350881","parentId":"350800"}],"id":"350800","parentId":"350000"},{"divCode":"350900","division":"宁德市","parentCode":"350000","children":[{"divCode":"350901","division":"宁德市辖区","parentCode":"350900","children":null,"id":"350901","parentId":"350900"},{"divCode":"350902","division":"蕉城区","parentCode":"350900","children":null,"id":"350902","parentId":"350900"},{"divCode":"350921","division":"霞浦县","parentCode":"350900","children":null,"id":"350921","parentId":"350900"},{"divCode":"350922","division":"古田县","parentCode":"350900","children":null,"id":"350922","parentId":"350900"},{"divCode":"350923","division":"屏南县","parentCode":"350900","children":null,"id":"350923","parentId":"350900"},{"divCode":"350924","division":"寿宁县","parentCode":"350900","children":null,"id":"350924","parentId":"350900"},{"divCode":"350926","division":"柘荣县","parentCode":"350900","children":null,"id":"350926","parentId":"350900"},{"divCode":"350981","division":"福安市","parentCode":"350900","children":null,"id":"350981","parentId":"350900"},{"divCode":"350982","division":"福鼎市","parentCode":"350900","children":null,"id":"350982","parentId":"350900"}],"id":"350900","parentId":"350000"}],"id":"350000","parentId":"0"}];
+			$.back = function () {
+				vue.clkBack();
+			}
+			$.plusReady(function() {
+				$('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					startX: 0, //初始化时滚动至x
+					startY: 0, //初始化时滚动至y
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0005, //阻尼系数,系数越小滑动越灵敏
+					bounce: true //是否启用回弹
+				});
+				window.addEventListener(app.option.pageInitEventName, function (event) {
+					//  TODO 此处执行页面加载完成后，需要立刻执行的代码
+					// 通过event.detail可获得传递过来的参数内容
+					// 初始化
+					vue.init();
+					// 设置标题
+					vue.title = event.detail.title || '辖区';
+					vue.type = event.detail.type || 0;
+				});
+			});
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					title: '',
+					// 0：到县， 1：到乡镇
+					type: 0,
+					placeResult: [],
+					address: '',
+					showAddress: false
+				},
+				computed: {
+					currentTreeData: function () {
+						return this.placeResult[this.placeResult.length - 1] || {};
+					}
+				},
+				mounted: function() {
+					this.init();
+				},
+				methods: {
+					init: function () {
+						this.placeResult = [];
+						this.address = '';
+						this.showAddress = false;
+						this.clkTreeItem(treeData[0]);
+					},
+					clkTreeItem: function (info) {
+						this.placeResult.push(info);
+						if (this.type === 0 && (!info.children || info.children.length === 0)) {
+							this.finish(this.placeResult);
+						}
+						// 滚动条到顶部
+						$('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+					},
+					clkSave: function () {
+						var result = JSON.parse(JSON.stringify(this.placeResult));
+						result.push({
+							'divCode': '',
+							'division': this.address,
+							'parentCode': '',
+							'children': null,
+							'id': '',
+							'parentId': '',
+						});
+						this.finish(result);
+					},
+					clkBack: function () {
+						if (this.placeResult.length === 1) {
+							// 关闭页面
+							app.closePage();
+						} else {
+							this.placeResult.splice(this.placeResult.length - 1, 1);	
+						}
+					},
+					finish: function (data) {
+						$.fire(plus.webview.currentWebview().opener(), 'selectPlaceEvent', {
+							arr: data
+						});
+						app.closePage();
+					}
+				}
+			});
+		}(mui, document));
+	</script>
+
+</html>

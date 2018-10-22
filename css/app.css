@@ -1,0 +1,187 @@
+@import url("mui.min.css");
+html,
+body {
+	height: 100%;
+	color: #333;
+	font-size: 15px;
+	--theme: #00A65A;
+}
+
+input, p {
+	margin: 0;
+	padding: 0;
+	color: inherit;
+	font-size: inherit;
+}
+
+i {
+	font-style: normal;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+::-webkit-input-placeholder {
+    color: #999;
+    opacity: 0.54;
+    font-size: inherit;
+}
+
+:-moz-placeholder {
+    color: #999;
+    opacity: 0.54;
+    font-size: inherit;
+}
+
+::-moz-placeholder {
+    color: #999;
+    opacity: 0.54;
+    font-size: inherit;
+}
+
+:-ms-input-placeholder {
+    color: #999;
+    opacity: 0.54;
+    font-size: inherit;
+}
+
+#app {
+	height: 100%;
+}
+
+.mui-bar-nav {
+	color: #fff;
+	background-color: var(--theme);
+}
+
+.mui-bar-nav>* {
+	color: inherit!important;
+}
+
+.mui-bar-nav>.mui-btn {
+	padding-right: 5px;
+}
+
+.mui-scroll-wrapper {
+	top: 44px;
+	padding: 10px 0 20px 0;
+}
+
+/* 自定义li */
+.mui-table-view.cust {
+	margin-bottom: 10px;
+}
+.mui-table-view.cust>.mui-table-view-cell>label {
+	display: inline-block;
+	padding: 0;
+	width: 100px;
+	line-height: inherit;
+}
+.mui-table-view.cust>.mui-table-view-cell>input {
+	margin: 0;
+	padding: 0;
+	height: 22px;
+	line-height: 22px;
+	border: 0;
+	background-color: transparent;
+}
+.mui-table-view.cust>.mui-table-view-cell>input.mui-input-clear {
+	padding-right: 20px;
+}
+.mui-table-view.cust>.mui-table-view-cell>.mui-icon-clear {
+	top: 12px;
+}
+.mui-table-view.cust>.mui-table-view-cell>.mui-pull-right {
+	width: calc(100% - 100px - 5px);
+	text-align: right;
+	word-break: break-all;
+	color: #999;
+}
+
+.mui-table-view.cust>.mui-table-view-cell>.mui-navigate-right {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	padding: inherit;
+}
+
+.mui-table-view.cust>.mui-table-view-cell>.mui-navigate-right:after {
+	right: 0;
+	left: 0;
+	width: 10px;
+	margin: auto;
+}
+
+.mui-table-view.cust>.mui-table-view-cell>.mui-navigate-right.mui-active {
+	background-color: transparent;
+}
+
+.mui-table-view.cust>.mui-table-view-cell>.mui-navigate-right+.mui-pull-right {
+	padding-right: 10px;
+}
+
+.mui-table-view.cust > .mui-table-view-cell.attach {}
+.mui-table-view.cust > .mui-table-view-cell.attach img,
+.mui-table-view.cust > .mui-table-view-cell.attach .btn-add {
+	display: inline-block;
+	margin: 4px;
+	margin-left: 0;
+	width: 60px;
+	height: 60px;
+	border: solid 1px;
+	vertical-align: top;
+}
+.mui-table-view.cust > .mui-table-view-cell.attach .btn-add {
+	position: relative;
+	color: #eee;
+	line-height: 60px;
+	text-align: center;
+	border-color: inherit;
+	font-size: 30px;
+}
+.mui-table-view.cust > .mui-table-view-cell.attach .btn-add:active {
+	background-color: #f8f8f8;
+}
+
+/*自定义底部导航中的按钮*/
+.mui-bar-tab .mui-tab-item-cust {
+	display: table-cell;
+	overflow: hidden;
+	width: 1%;
+	height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #929292;
+}
+
+.mui-bar-tab .mui-tab-item-cust .mui-icon {
+	top: 3px;
+	width: 24px;
+	height: 24px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.mui-bar-tab .mui-tab-item-cust .mui-icon~.mui-tab-label {
+	font-size: 11px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+button.theme {
+	border: 0;
+	color: #fff;
+	background-color: var(--theme);
+}
+button.theme:enabled:active {
+	background-color: var(--theme);
+	filter: sepia(40%);
+}

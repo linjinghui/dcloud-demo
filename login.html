@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/app.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<div id="app">
+			我是登录页面
+			<button @click="clkLogin">login</button>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function($, doc) {
+			var pageMainId = 'main';
+			//  双击退出功能
+			app.confirmQuitApp();
+			$.init();
+			$.plusReady(function() {
+				//  预加载首页
+				app.preload(pageMainId);
+			});
+			var vue = new Vue({
+				el: '#app',
+				data: {
+
+				},
+				computed: {
+
+				},
+				mounted: function() {
+//					console.log(JSON.stringify(app));
+				},
+				methods: {
+					clkLogin: function() {
+						app.openPreload(pageMainId);
+					}
+				}
+			});
+		}(mui, document));
+	</script>
+
+</html>

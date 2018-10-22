@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/app.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<div id="app" style="height: 100%;">
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item mui-active" data-index="0">
+					<span class="mui-icon mui-icon-contact"></span>
+					<span class="mui-tab-label">主体信息</span>
+				</a>
+				<a class="mui-tab-item" data-index="1">
+					<span class="mui-icon mui-icon-person"></span>
+					<span class="mui-tab-label">生产档案</span>
+				</a>
+				<a class="mui-tab-item" data-index="2">
+					<span class="mui-icon mui-icon-personadd"></span>
+					<span class="mui-tab-label">农资品</span>
+				</a>
+				<a class="mui-tab-item" data-index="3">
+					<span class="mui-icon mui-icon-phone"></span>
+					<span class="mui-tab-label">推送信息</span>
+				</a>
+				<a class="mui-tab-item-cust" data-index="4">
+					<span class="mui-icon mui-icon-person"></span>
+					<span class="mui-tab-label">我</span>
+				</a>
+			</nav>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function($, doc) {
+			//  双击退出功能
+			app.confirmQuitApp();
+			$.init();
+			$.plusReady(function() {
+				$('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					startX: 0, //初始化时滚动至x
+					startY: 0, //初始化时滚动至y
+					indicators: true, //是否显示滚动条
+					deceleration: $.os.ios ? 0.003 : 0.0009, //阻尼系数,系数越小滑动越灵敏
+					bounce: true //是否启用回弹
+				});
+				window.addEventListener(app.option.pageInitEventName, function(event) {
+					//  TODO 此处执行页面加载完成后，需要立刻执行的代码
+					// 通过event.detail可获得传递过来的参数内容
+					$.trigger($('.mui-bar a')[0], 'tap');
+				});
+				// 预加载子页面
+				app.preloadSubpage();
+				
+				// 监听底部导航点击切换
+				var activePage = '';
+				$('.mui-bar').on('tap', 'a', function (e) {
+					var index = this.getAttribute('data-index');
+					var url = app.pages.subpage[index];
+					var targetPage = plus.webview.getWebviewById(url);
+					app.changeSubpage(targetPage, activePage, {});
+					activePage = targetPage;
+				});
+			});
+		}(mui, document));
+	</script>
+
+</html>

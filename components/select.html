@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/app.css" rel="stylesheet" />
+		<link href="../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			/*.mui-scroll-wrapper {
+				top: 44px;
+				padding: 20px 0;
+				background-color: #f2f2f2;
+			}
+			input {
+				margin: 0!important;
+				border: 0!important;
+			}
+			.mui-input-row > label {
+				text-align: right;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div id="app" style="height: 100%;">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<button type="button" class="mui-right mui-btn mui-btn-link mui-btn-nav mui-pull-right" v-if="showSave" @click="clkSave">
+					完成
+				</button>
+				<h1 class="mui-center mui-title">{{title}}</h1>
+			</div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view cust"> 
+						<div class="mui-input-row mui-table-view-cell" v-show="type==='input'">
+							<label style="width: 0;padding:0;"></label>
+							<input style="width:100%;" class="mui-input-clear" type="text" :placeholder="placeholder" v-model="result">
+						</div>
+						<template v-if="'datetime|date|time|month|hour'.indexOf(type)>=0">
+							<li class="mui-input-row mui-table-view-cell">
+								<label>开始时间</label>
+								<input class="mui-pull-right" type="text" readonly="readonly" placeholder="点击选择时间" v-model="result[0]" @click="clkTime(0)"/>
+							</li>
+							<li class="mui-input-row mui-table-view-cell">
+								<label>结束时间</label>
+								<input class="mui-pull-right" type="text" readonly="readonly" placeholder="点击选择时间" v-model="result[1]" @click="clkTime(1)"/>
+							</li>
+						</template>
+						<li class="mui-table-view-cell" v-else v-for="(item,index) in list" @click="clkItem(index,item)">
+							{{listKey?item[listKey]:item}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.picker.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script>
+		(function($, doc) {
+			$.init();
+			$.plusReady(function() {
+				$('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					startX: 0, //初始化时滚动至x
+					startY: 0, //初始化时滚动至y
+					indicators: true, //是否显示滚动条
+					deceleration: $.os.ios?0.003:0.0009, //阻尼系数,系数越小滑动越灵敏
+					bounce: true //是否启用回弹
+				});
+				window.addEventListener(app.option.pageInitEventName, function (event) {
+					//  TODO 此处执行页面加载完成后，需要立刻执行的代码
+					// 通过event.detail可获得传递过来的参数内容
+					// 滚动到顶部
+					$('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+					// 设置初始值
+					vue.init({
+						title: event.detail.title,
+						type: event.detail.type,
+						list: event.detail.list,
+						listKey: event.detail.listKey,
+						placeholder: event.detail.placeholder,
+						result: event.detail.result
+					});
+				});
+			});
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					title: '',
+					// select: 单选, multi: 多选, input: 文本输入框, datetime|date|time|month|hour: 起始日期
+					type: 'select',
+					list: '',
+					listKey: '',
+					placeholder: '',
+					result: []
+				},
+				computed: {
+					showSave: function () {
+						return this.type === 'multi' || this.type === 'input' || ('datetime|date|time|month|hour'.indexOf(this.type) >= 0);
+					}
+				},
+				mounted: function() {
+					
+				},
+				methods: {
+					init: function (obj) {
+						this.title = obj.title || '';
+						this.type = obj.type || 'select';
+						this.list = obj.list || '';
+						this.listKey = obj.listKey || '';
+						this.placeholder = obj.placeholder || '';
+						this.result = obj.result || [];
+					},
+					clkTime: function (index) {
+						var _this = this;
+						var picker = new $.DtPicker({
+							// datetime|date|time|month|hour
+							type: this.type || 'datetime'
+						});
+						picker.show(function(rs) {
+							_this.$set(_this.result, index, rs.text);
+						});
+					},
+					clkItem: function (index, info) {
+						if (this.type === 'multi') {
+							// 多选
+							this.indexs[this.indexs.length] = index;
+							this.result.push(info);
+//							if (this.result === '') {
+//								this.result = [];
+//							}
+						} else if (!this.showSave) {
+							// 点击保存
+							this.result.push(info);
+							this.clkSave();
+						}
+						
+					},
+					clkSave: function () {
+						$.fire(plus.webview.currentWebview().opener(), 'selectEvent', {
+							title: this.title,
+							result: this.result
+						});
+						app.closePage();
+					}
+				}
+			});
+		}(mui, document));
+	</script>
+
+</html>

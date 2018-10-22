@@ -1,0 +1,31 @@
+{
+  "index.html": {
+    "resources": [
+      "/js/mui.min.js"
+    ]
+  },
+  "login.html": {
+    "refer": [
+      "bottom-nav.html",
+      "pages/bottom-nav.html"
+    ]
+  },
+  "bottom-nav.html": {
+    "resources": [
+      "pages/sub-1.html"
+    ],
+    "refer": [
+      "pages/sub-1.html",
+      "pages/sub-5.html",
+      "pages/sub-4.html",
+      "pages/sub-3.html",
+      "pages/sub-2.html"
+    ]
+  },
+  "pages/sub-1.html": {
+    "refer": [
+      "components/place.html",
+      "components/select.html"
+    ]
+  }
+}

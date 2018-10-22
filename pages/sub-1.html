@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/app.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<button type="button" class="mui-right mui-btn mui-btn-link mui-btn-nav mui-pull-right" @click="clkSave">
+					完成
+				</button>
+				<h1 class="mui-center mui-title">子页面-1-列表</h1>
+			</div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view cust">
+						<li class="mui-table-view-cell" @click="clkSelectPlace">
+							<label>收获地址</label>
+							<span class="mui-navigate-right"></span>
+							<span class="mui-pull-right">{{dataInfo.address}}</span>
+						</li>
+						<li class="mui-table-view-cell" @click="clkSelect">
+							<label>选择修改</label>
+							<i class="mui-navigate-right"></i>
+							<span class="mui-pull-right">{{dataInfo.content}}</span>
+						</li>
+						<li class="mui-table-view-cell" @click="clkSelect2">
+							<label>输入修改</label>
+							<i class="mui-navigate-right"></i>
+							<span class="mui-pull-right">{{dataInfo.name}}</span>
+						</li>
+						<li class="mui-table-view-cell" @click="clkSelect3">
+							<label>起止时间</label>
+							<i class="mui-navigate-right"></i>
+							<span class="mui-pull-right">{{(dataInfo.time||[]).join(' - ')}}</span>
+						</li>
+						<li class="mui-input-row mui-table-view-cell">
+							<label>联系电话</label>
+							<input class="mui-pull-right mui-input-clear" type="text" value="阿萨德阿萨德期望度阿萨德阿萨德阿萨打算打算大阿萨德阿萨德期望度阿萨德阿萨德阿萨打算打算大阿萨德阿萨德期望度阿萨德阿萨德阿萨打算打算大"/>
+						</li>
+						<li class="mui-table-view-cell">
+							<label>普通列表</label>
+							<span class="mui-pull-right">2312</span>
+						</li>
+						<li class="mui-table-view-cell attach">
+							<label>证照图片：</label>
+							<div class="mui-pull-right" @click="clkZztp">
+								<img width="100" :src="attach.url" v-for="(attach,index) in dataInfo.attaches" @click.stop="clkPreviewImage(attach.url)" @longtap.stop="longtapImage(index)"/>
+								<span class="btn-add" v-show="!dataInfo.attaches||dataInfo.attaches.length===0" @click.stop="clkZztp">+</span>	
+							</div>							
+						</li>
+		            </ul>
+				</div>
+			</div>
+			<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" @click="clkTakePhoto">
+						<a href="#">拍照</a>
+					</li>
+					<li class="mui-table-view-cell" @click="clkPickImages">
+						<a href="#">从手机相册选择</a>
+					</li>
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#picture"><b>取消</b></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function($, doc) {
+			// 自定义退出功能
+//			$.back = function() {}
+			var pagePlaceId = 'place';
+			var pageSelectId = 'select';
+			$.init({
+				gestureConfig: {
+			   		longtap: true
+				}
+			});
+			$.plusReady(function() {
+				$('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					startX: 0, //初始化时滚动至x
+					startY: 0, //初始化时滚动至y
+					indicators: true, //是否显示滚动条
+					deceleration: $.os.ios ? 0.003 : 0.0009, //阻尼系数,系数越小滑动越灵敏
+					bounce: true //是否启用回弹
+				});
+				window.addEventListener(app.option.pageInitEventName, function(event) {
+					//  TODO 此处执行页面加载完成后，需要立刻执行的代码
+					// 通过event.detail可获得传递过来的参数内容
+					// 滚动到顶部
+					$('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+					// 加载选择收获地址页面
+					app.preload(pagePlaceId);
+					// 加载选择页面
+					app.preload(pageSelectId);
+				});
+				// 监听选择地址回调
+				window.addEventListener('selectPlaceEvent', function (event) {
+					var places = event.detail.arr;
+					vue.$set(vue.dataInfo, 'address', (function () {
+						places = places.map(function (item) {
+							return item.division;
+						});
+						return places.join('>');
+					}()));
+				});
+				// 监听选择回调
+				window.addEventListener('selectEvent', function (event) {
+					var data = event.detail;
+					if (data.title === '自定义标题') {
+						vue.$set(vue.dataInfo, 'content', data.result[0]);	
+					} else if (data.title === '修改姓名') {
+						vue.$set(vue.dataInfo, 'name', data.result);	
+					} else if (data.title === '选择日期') {
+						vue.$set(vue.dataInfo, 'time', data.result);	
+					}
+				});
+			});
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					dataInfo: {}
+				},
+				computed: {
+
+				},
+				mounted: function() {
+					
+				},
+				methods: {
+					clkSave: function() {},
+					clkSelectPlace: function () {
+						app.openPreload(pagePlaceId, { type: 1 });
+					},
+					clkSelect: function () {
+						app.openPreload(pageSelectId, {
+							title: '自定义标题',
+							// select: 单选, multi: 多选, input: 文本输入框, date: 起始日期
+							type: 'select',
+							list: ['item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7'],
+							listKey: '',
+							placeholder: ''
+						});
+					},
+					clkSelect2: function () {
+						app.openPreload(pageSelectId, {
+							title: '修改姓名',
+							// select: 单选, multi: 多选, input: 文本输入框, date: 起始日期
+							type: 'input',
+							list: '',
+							listKey: '',
+							placeholder: '请输入内容',
+							result: this.dataInfo.name
+						});
+					},
+					clkSelect3: function () {
+						console.log(this.dataInfo.time);
+						app.openPreload(pageSelectId, {
+							title: '选择日期',
+							// select: 单选, multi: 多选, input: 文本输入框, datetime|date|time|month|hour: 起始日期
+							type: 'time',
+							list: '',
+							listKey: '',
+							placeholder: '',
+							result: this.dataInfo.time
+						});
+					},
+					// 附件相关
+					clkZztp: function () {
+						$('#picture').popover('toggle');
+					},
+					clkPreviewImage: function (url) {
+						plus.nativeUI.previewImage([url]);
+					},
+					longtapImage: function (index) {
+						var _this = this;
+						$.confirm('是否删除该图片？', '提示', ['否', '是'], function(e) {
+							if (e.index == 1) {
+								_this.dataInfo.attaches.splice(index, 1);
+							}
+						}, 'div');
+					},
+					clkTakePhoto: function () {
+						var _this = this;
+						app.captureImage(function (url) {
+							var attaches = _this.dataInfo.attaches || []; 
+							attaches.push({url: url});
+							_this.$set(_this.dataInfo, 'attaches', attaches);
+						});
+						$('#picture').popover('hide');
+					},
+					clkPickImages: function () {
+						var _this = this;
+						plus.gallery.pick(function (url) {
+					    	var attaches = _this.dataInfo.attaches || []; 
+							attaches.push({url: url});
+							_this.$set(_this.dataInfo, 'attaches', attaches);
+					    }, function (e) {
+					    }, {filter:"image"});
+					    $('#picture').popover('hide');
+					}
+					// 附件相关
+				}
+			});
+		}(mui, document));
+	</script>
+
+</html>
