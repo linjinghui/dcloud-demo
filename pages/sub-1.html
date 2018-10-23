@@ -52,7 +52,7 @@
 							<span class="mui-pull-right">2312</span>
 						</li>
 						<li class="mui-table-view-cell mui-collapse">
-							<a>方案方案方案方案方案方案方案方案方案方案1234</a>
+							<a>多行显示</a>
 							<ul class="mui-table-view mui-table-view-chevron">
 								<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">PC方案</a>
 								</li>
@@ -61,6 +61,10 @@
 								<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">TV方案</a>
 								</li>
 							</ul>
+						</li>
+						<li class="mui-input-row mui-table-view-cell">
+							<label>多文本输入</label>
+							<div class="text-area mui-pull-right" placeholder="请输入" maxlength="5" contenteditable="true" oninput="javascript:tar=event.target,len=tar.getAttribute('maxlength'),val=tar.innerText;val.length>len&&(tar.innerText=val.slice(0,len),window.getSelection().removeAllRanges());"></div>
 						</li>
 						<li class="mui-table-view-cell attach">
 							<label>证照图片：</label>
