@@ -13,15 +13,8 @@
 		'main': './main.html',
 		'place': '/components/place.html',
 		'select': '/components/select.html',
-		'ztxxgl': '/pages/ztxx/ztxxgl/index.html',
-		'zzxx': '/pages/ztxx/zzxx/index.html',
-		'rzxx': '/pages/ztxx/rzxx/index.html',
-		'scjd': '/pages/ztxx/scjd/index.html',
-		'dslj': '/pages/ztxx/dslj/index.html',
-		'ztxx': '/pages/ztxx/ztxx/index.html',
-		'qyry': '/pages/ztxx/qyry/index.html',
 		// 子页面数组
-		'subpage': ['./pages/ztxx/index.html', './pages/scda/index.html', './pages/nzp/index.html', './pages/tsxx/index.html', './pages/w/index.html']
+		'subpage': ['./pages/sub-1.html', './pages/sub-2.html', './pages/sub-3.html', './pages/sub-4.html', './pages/sub-5.html']
 	};
 	// 二次确认退出
 	var backButtonPress = 0;
@@ -47,12 +40,13 @@
 	 */
 	owner.preload = function (id, callback) {
 		var url = owner.pages[id];
-		var page = plus.webview.getWebviewById(id);
-		if (!page) {
-			page = mui.preload({ 'id': id, 'url': url });
-		} else {
-			callback && callback();
-		}
+//		var page = plus.webview.getWebviewById(id);
+//		if (!page) {
+//			page = mui.preload({ 'id': id, 'url': url });
+//		} else {
+//			callback && callback();
+//		}
+		page = mui.preload({ 'id': id, 'url': url });
 		page.addEventListener('loaded', function () {
 			callback && callback();
 		});
@@ -181,7 +175,7 @@
       }
     }
     owner.dataFormat = function (date, fmt) {
-	  if (!date || !fmt) {
+	  if (!date || (date + '' === 'Invalid Date') || !fmt) {
 	    return "";
 	  }
 	  var o = {

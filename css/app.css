@@ -7,7 +7,8 @@ body {
 	--theme: #00A65A;
 }
 
-input, p {
+input,
+p {
 	margin: 0;
 	padding: 0;
 	color: inherit;
@@ -18,34 +19,35 @@ i {
 	font-style: normal;
 }
 
-ul, li {
+ul,
+li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
 ::-webkit-input-placeholder {
-    color: #999;
-    opacity: 0.54;
-    font-size: inherit;
+	color: #999;
+	opacity: 0.54;
+	font-size: inherit;
 }
 
 :-moz-placeholder {
-    color: #999;
-    opacity: 0.54;
-    font-size: inherit;
+	color: #999;
+	opacity: 0.54;
+	font-size: inherit;
 }
 
 ::-moz-placeholder {
-    color: #999;
-    opacity: 0.54;
-    font-size: inherit;
+	color: #999;
+	opacity: 0.54;
+	font-size: inherit;
 }
 
 :-ms-input-placeholder {
-    color: #999;
-    opacity: 0.54;
-    font-size: inherit;
+	color: #999;
+	opacity: 0.54;
+	font-size: inherit;
 }
 
 #app {
@@ -70,16 +72,20 @@ ul, li {
 	padding: 10px 0 20px 0;
 }
 
+
 /* 自定义li */
+
 .mui-table-view.cust {
 	margin-bottom: 10px;
 }
+
 .mui-table-view.cust>.mui-table-view-cell>label {
 	display: inline-block;
 	padding: 0;
 	width: 100px;
 	line-height: inherit;
 }
+
 .mui-table-view.cust>.mui-table-view-cell>input {
 	margin: 0;
 	padding: 0;
@@ -88,12 +94,15 @@ ul, li {
 	border: 0;
 	background-color: transparent;
 }
+
 .mui-table-view.cust>.mui-table-view-cell>input.mui-input-clear {
 	padding-right: 20px;
 }
+
 .mui-table-view.cust>.mui-table-view-cell>.mui-icon-clear {
 	top: 12px;
 }
+
 .mui-table-view.cust>.mui-table-view-cell>.mui-pull-right {
 	width: calc(100% - 100px - 5px);
 	text-align: right;
@@ -125,18 +134,20 @@ ul, li {
 	padding-right: 10px;
 }
 
-.mui-table-view.cust > .mui-table-view-cell.attach {}
-.mui-table-view.cust > .mui-table-view-cell.attach img,
-.mui-table-view.cust > .mui-table-view-cell.attach .btn-add {
+.mui-table-view.cust>.mui-table-view-cell.attach {}
+
+.mui-table-view.cust>.mui-table-view-cell.attach img,
+.mui-table-view.cust>.mui-table-view-cell.attach .btn-add {
 	display: inline-block;
 	margin: 4px;
 	margin-left: 0;
 	width: 60px;
 	height: 60px;
-	border: solid 1px;
+	border: solid 1px #eee;
 	vertical-align: top;
 }
-.mui-table-view.cust > .mui-table-view-cell.attach .btn-add {
+
+.mui-table-view.cust>.mui-table-view-cell.attach .btn-add {
 	position: relative;
 	color: #eee;
 	line-height: 60px;
@@ -144,11 +155,14 @@ ul, li {
 	border-color: inherit;
 	font-size: 30px;
 }
-.mui-table-view.cust > .mui-table-view-cell.attach .btn-add:active {
+
+.mui-table-view.cust>.mui-table-view-cell.attach .btn-add:active {
 	background-color: #f8f8f8;
 }
 
+
 /*自定义底部导航中的按钮*/
+
 .mui-bar-tab .mui-tab-item-cust {
 	display: table-cell;
 	overflow: hidden;
@@ -181,7 +195,120 @@ button.theme {
 	color: #fff;
 	background-color: var(--theme);
 }
+
 button.theme:enabled:active {
 	background-color: var(--theme);
 	filter: sepia(40%);
+}
+
+
+/*下拉滚动条样式 V */
+
+.mui-bar-nav~.mui-content .mui-slider.mui-fullscreen {
+	top: 0px;
+}
+
+.mui-pull-top-tips {
+	position: absolute;
+	top: -20px;
+	left: 50%;
+	margin-left: -25px;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	z-index: 1;
+}
+
+.mui-bar~.mui-pull-top-tips {
+	top: 24px;
+}
+
+.mui-pull-top-wrapper {
+	width: 42px;
+	height: 42px;
+	display: block;
+	text-align: center;
+	background-color: #efeff4;
+	border: 1px solid #ddd;
+	border-radius: 25px;
+	background-clip: padding-box;
+	box-shadow: 0 4px 10px #bbb;
+	overflow: hidden;
+}
+
+.mui-pull-top-tips.mui-transitioning {
+	-webkit-transition-duration: 200ms;
+	transition-duration: 200ms;
+}
+
+.mui-pull-top-tips .mui-pull-loading {
+	-webkit-backface-visibility: hidden;
+	-webkit-transition-duration: 400ms;
+	transition-duration: 400ms;
+	margin: 0;
+}
+
+
+/*.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}*/
+
+.mui-pull-top-wrapper .mui-icon.mui-reverse {
+	/*-webkit-transform: rotate(180deg) translateZ(0);*/
+}
+
+.mui-pull-bottom-tips {
+	text-align: center;
+	background-color: #efeff4;
+	font-size: 15px;
+	line-height: 40px;
+	color: #777;
+}
+
+.mui-pull-top-canvas {
+	overflow: hidden;
+	background-color: #fafafa;
+	border-radius: 40px;
+	box-shadow: 0 4px 10px #bbb;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.mui-pull-top-canvas canvas {
+	width: 40px;
+}
+
+.mui-slider-indicator.mui-segmented-control {
+	padding: 0;
+	background-color: #efeff4;
+}
+
+.mui-scroll-wrapper {
+	padding: 0;
+}
+
+.mui-segmented-control .mui-control-item {
+	line-height: 44px;
+}
+
+
+/*下拉滚动条样式 ∧*/
+
+.mui-table-view-cell.mui-collapse {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.mui-table-view-cell.mui-collapse>a {
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.mui-table-view-cell.mui-collapse>.mui-table-view-chevron {
+	margin-left: 0;
+	width: 100%;
 }

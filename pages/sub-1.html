@@ -51,6 +51,17 @@
 							<label>普通列表</label>
 							<span class="mui-pull-right">2312</span>
 						</li>
+						<li class="mui-table-view-cell mui-collapse">
+							<a>方案方案方案方案方案方案方案方案方案方案1234</a>
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">PC方案</a>
+								</li>
+								<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">手机方案</a>
+								</li>
+								<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">TV方案</a>
+								</li>
+							</ul>
+						</li>
 						<li class="mui-table-view-cell attach">
 							<label>证照图片：</label>
 							<div class="mui-pull-right" @click="clkZztp">
@@ -91,7 +102,7 @@
 				gestureConfig: {
 			   		longtap: true
 				}
-			});
+			});			
 			$.plusReady(function() {
 				$('.mui-scroll-wrapper').scroll({
 					scrollY: true, //是否竖向滚动

@@ -49,11 +49,13 @@
 				plus.nativeUI.toast(type);
 			},
 			success: function (data) {
-				console.log(JSON.stringify(data));
 				wait.close();
-				callback && callback(data);
 				if (data.code !== 0) {
 					plus.nativeUI.toast(data.msg);
+				} else {
+					// 缓存用户信息
+					owner.saveUser(data.ret);
+					callback && callback(data);
 				}
 			}
 		});
@@ -76,7 +78,7 @@
 	/**
 	 * 退出登录
 	 **/
-	owner.loginout = function(callback) {
+	owner.loginout = function() {
 		var url = URL + '/logout';
 		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
 		$.ajax(url, {
@@ -90,9 +92,12 @@
 			},
 			success: function (data) {
 				wait.close();
-				callback && callback(data);
 			}
-		});
+		});		
+		// 跳转到登录页
+		plus.webview.getLaunchWebview().show('pop-in');
+		// 清除缓存
+		app.lsgDeleteData();
 	};
 	
 	/**
@@ -150,6 +155,159 @@
 			success: function (data) {
 				wait.close();
 				filterCode(data);
+				callback && callback(data);
+				if (data.code !== 0) {
+					plus.nativeUI.toast(data.msg);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 获取 认证信息列表
+	 **/
+	owner.getRzDataList = function(callback) {
+		var userInfo = owner.getUserInfo();
+		var url = URL + '/ent_main_certification/getAllInfo';
+		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
+		$.ajax(url, {
+			dataType: 'json',
+			type: 'get',
+			timeout: TIMEOUT,
+			data:{
+				entId: userInfo.entInfo.entId
+			},
+			error: function (xhr, type, errorThrown) {
+				wait.close();
+				plus.nativeUI.toast(type);
+			},
+			success: function (data) {
+				wait.close();
+				filterCode(data);
+				callback && callback(data);
+				if (data.code !== 0) {
+					plus.nativeUI.toast(data.msg);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 获取 生产基地信息列表
+	 **/
+	owner.getScjdDataList = function(callback) {
+		var userInfo = owner.getUserInfo();
+		var url = URL + '/ent_main_produce_place/getAllInfo';
+		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
+		$.ajax(url, {
+			dataType: 'json',
+			type: 'get',
+			timeout: TIMEOUT,
+			data:{
+				entId: userInfo.entInfo.entId
+			},
+			error: function (xhr, type, errorThrown) {
+				wait.close();
+				plus.nativeUI.toast(type);
+			},
+			success: function (data) {
+				wait.close();
+				filterCode(data);
+				callback && callback(data);
+				if (data.code !== 0) {
+					plus.nativeUI.toast(data.msg);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 获取 电商信息列表
+	 **/
+	owner.getDsDataList = function(callback) {
+		var userInfo = owner.getUserInfo();
+		var url = URL + '/ent_main_recommend/getAllInfo';
+		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
+		$.ajax(url, {
+			dataType: 'json',
+			type: 'get',
+			timeout: TIMEOUT,
+			data:{
+				entId: userInfo.entInfo.entId
+			},
+			error: function (xhr, type, errorThrown) {
+				wait.close();
+				plus.nativeUI.toast(type);
+			},
+			success: function (data) {
+				wait.close();
+				filterCode(data);
+				callback && callback(data);
+				if (data.code !== 0) {
+					plus.nativeUI.toast(data.msg);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 获取 主体形象信息
+	 **/
+	owner.getZtxxInfo = function(callback) {
+		var userInfo = owner.getUserInfo();
+		var url = URL + '/ent_main_sub_info/getInfo';
+		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
+		$.ajax(url, {
+			dataType: 'json',
+			type: 'get',
+			timeout: TIMEOUT,
+			data:{
+				entId: userInfo.entInfo.entId
+			},
+			error: function (xhr, type, errorThrown) {
+				wait.close();
+				plus.nativeUI.toast(type);
+			},
+			success: function (data) {
+				wait.close();
+				filterCode(data);
+				callback && callback(data);
+				if (data.code !== 0) {
+					plus.nativeUI.toast(data.msg);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 更新 主体形象信息
+	 **/
+	owner.getSaveZtxxInfo = function(params, callback) {
+		var userInfo = owner.getUserInfo();
+		var url = URL + '/ent_main_sub_info/saveOrUpdate';
+//		var url = URL + '/ent_main_sub_info/saveOrUpdate' + urlEncode({
+//			entId: userInfo.entInfo.entId,
+//			entDescription: params.entDescription,
+//			entWebsite: params.entWebsite
+//		});
+		var wait = plus.nativeUI.showWaiting(WAIT_TEXT);
+		$.ajax(url, {
+			dataType: 'json',
+			type: 'post',
+			timeout: TIMEOUT,
+//			headers: {'Content-Type':'application/json'},
+			data: {
+				entId: userInfo.entInfo.entId,
+				entDescription: params.entDescription,
+				entWebsite: params.entWebsite
+			},
+			error: function (xhr, type, errorThrown) {
+				wait.close();
+				plus.nativeUI.toast(type);
+			},
+			success: function (data) {
+				console.log(JSON.stringify(data));
+				wait.close();
 				callback && callback(data);
 				if (data.code !== 0) {
 					plus.nativeUI.toast(data.msg);

@@ -143,7 +143,8 @@
 				"resources": [],
 				"refer": [
 					"bottom-nav.html",
-					"pages/bottom-nav.html"
+					"pages/bottom-nav.html",
+					"main.html"
 				],
 				"priority": 0
 			},
@@ -164,6 +165,18 @@
 				"refer": [
 					"components/place.html",
 					"components/select.html"
+				],
+				"priority": 0
+			},
+			"main.html": {
+				"resources": [
+					"pages/sub-1.html"
+				],
+				"refer": [
+					"pages/sub-5.html",
+					"pages/sub-4.html",
+					"pages/sub-3.html",
+					"pages/sub-2.html"
 				],
 				"priority": 0
 			}
