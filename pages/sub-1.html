@@ -105,8 +105,13 @@
 			$.init({
 				gestureConfig: {
 			   		longtap: true
+				},
+				// 关闭公用页面
+				beforeback: function() {
+					plus.webview.getWebviewById(pagePlaceId).close();
+					plus.webview.getWebviewById(pageSelectId).close();
 				}
-			});			
+			});		
 			$.plusReady(function() {
 				$('.mui-scroll-wrapper').scroll({
 					scrollY: true, //是否竖向滚动
