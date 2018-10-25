@@ -73,6 +73,17 @@
 								<span class="btn-add" v-show="!dataInfo.attaches||dataInfo.attaches.length===0" @click.stop="clkZztp">+</span>	
 							</div>							
 						</li>
+						<li class="mui-table-view-cell">
+							<label>普通列表</label>
+							<span class="mui-pull-right">
+								<div class="mui-radio">
+									<input name="radio1" type="radio" value="1" v-model="dataInfo.hasMakeMaterial"><label>是</label>
+								</div>
+								<div class="mui-radio">
+									<input name="radio1" type="radio" value="0" v-model="dataInfo.hasMakeMaterial"><label>否</label>
+								</div>
+							</span>
+						</li>
 		            </ul>
 				</div>
 			</div>
