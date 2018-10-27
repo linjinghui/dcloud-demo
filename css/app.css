@@ -167,6 +167,27 @@ div[placeholder]:empty:before {
 	background-color: #f8f8f8;
 }
 
+.mui-table-view.cust>.mui-table-view-cell .mui-radio {
+	position: relative;
+	display: inline-block;
+	margin-left: 20px;
+}
+.mui-table-view.cust>.mui-table-view-cell .mui-radio > input {
+	position: relative;
+	top: unset;
+	right: unset;
+	vertical-align: middle;
+}
+.mui-table-view.cust>.mui-table-view-cell .mui-radio > label {
+	float: none;
+	margin-left: 5px;
+	width: unset;
+	padding-right: 0;
+	vertical-align: middle;
+}
+
+
+
 
 /*自定义底部导航中的按钮*/
 
@@ -204,7 +225,7 @@ div[placeholder]:empty:before {
 }
 
 .theme:enabled:active {
-	background-color: var(--theme);
+	background-color: var(--theme)!important;
 	filter: sepia(50%);
 }
 
@@ -341,4 +362,52 @@ footer>button {
 
 footer>button.save {
 	width: 100%;
+}
+
+.menu {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	z-index: 2;
+	text-align: center;
+}
+
+.menu>span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-size: cover;
+	transition: left .2s linear;
+}
+
+.menu>span:nth-of-type(1) {
+	z-index: 3;
+	color: #fff;
+	font-size: 50px;
+}
+
+.menu>span:nth-of-type(2) {
+	z-index: 2;
+	left: 0;
+	background-image: url(../images/nzp/wzlr.png);
+}
+
+.menu>span:nth-of-type(3) {
+	z-index: 1;
+	left: 0;
+	background-image: url(../images/nzp/sm.png);
+}
+
+.menu.show>span:nth-of-type(2) {
+	left: -60px;
+}
+
+.menu.show>span:nth-of-type(3) {
+	left: -120px;
 }
