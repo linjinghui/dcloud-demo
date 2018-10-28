@@ -13,8 +13,57 @@
 		'main': './main.html',
 		'place': '/components/place.html',
 		'select': '/components/select.html',
+		
+		'ztxxgl': '/pages/ztxx/ztxxgl/index.html',
+		'zzxx': '/pages/ztxx/zzxx/index.html',
+		'rzxx': '/pages/ztxx/rzxx/index.html',
+		'rzxxDetail': '/pages/ztxx/rzxx/detail.html',
+		'scjd': '/pages/ztxx/scjd/index.html',
+		'scjdDetail': '/pages/ztxx/scjd/detail.html',
+		'dslj': '/pages/ztxx/dslj/index.html',
+		'dsljDetail': '/pages/ztxx/dslj/detail.html',
+		'ztxx': '/pages/ztxx/ztxx/index.html',
+		'qyry': '/pages/ztxx/qyry/index.html',
+		'zspz': '/pages/ztxx/zspz/index.html',
+		
+		'tsxxDetail': '/pages/tsxx/detail.html',
+		
+		'scdanew': '/pages/scda/new.html',
+		'sfjl': '/pages/scda/sf/index.html',
+		'sfnew': '/pages/scda/sf/new.html',
+		'nyjl': '/pages/scda/ny/index.html',
+		'nynew': '/pages/scda/ny/new.html',
+		'nshd': '/pages/scda/nshd/index.html',
+		'nshdnew': '/pages/scda/nshd/new.html',
+		'sh': '/pages/scda/sh/index.html',
+		'shnew': '/pages/scda/sh/new.html',
+		'cjg': '/pages/scda/cjg/index.html',
+		'cjgnew': '/pages/scda/cjg/new.html',
+		'zbfs': '/pages/scda/zbfs/index.html',
+		'zbfsnew': '/pages/scda/zbfs/new.html',
+		'fm': '/pages/scda/fm/index.html',
+		'fmnew': '/pages/scda/fm/new.html',
+		'ghf': '/pages/scda/ghf/index.html',
+		'ghfnew': '/pages/scda/ghf/new.html',
+		'sy': '/pages/scda/sy/index.html',
+		'synew': '/pages/scda/sy/new.html',
+		'sl': '/pages/scda/sl/index.html',
+		'shouyao': '/pages/scda/shouyao/index.html',
+		'shouyaonew': '/pages/scda/shouyao/new.html',
+		'cl': '/pages/scda/cl/index.html',
+		'clnew': '/pages/scda/cl/new.html',
+		'bl': '/pages/scda/bl/index.html',
+		'blnew': '/pages/scda/bl/new.html',
+		'banliao': '/pages/scda/banliao/index.html',
+		
+		'nzpnew': '/pages/nzp/new.html',
+		'gmsd': '/pages/nzp/gmsd/index.html',
+		'gmsdnew': '/pages/nzp/gmsd/new.html',
+		
+		'tsjb': '/pages/w/tsjb.html',
+		
 		// 子页面数组
-		'subpage': ['./pages/sub-1.html', './pages/sub-2.html', './pages/sub-3.html', './pages/sub-4.html', './pages/sub-5.html']
+		'subpage': ['./pages/ztxx/index.html', './pages/scda/index.html', './pages/nzp/index.html', './pages/tsxx/index.html', './pages/w/index.html']
 	};
 	// 二次确认退出
 	var backButtonPress = 0;
@@ -40,17 +89,34 @@
 	 */
 	owner.preload = function (id, callback) {
 		var url = owner.pages[id];
-//		var page = plus.webview.getWebviewById(id);
-//		if (!page) {
-//			page = mui.preload({ 'id': id, 'url': url });
-//		} else {
-//			callback && callback();
-//		}
-		page = mui.preload({ 'id': id, 'url': url });
-		page.addEventListener('loaded', function () {
+		var page = plus.webview.getWebviewById(id);
+		if (!page) {
+			page = mui.preload({ 'id': id, 'url': url });
+			page.addEventListener('loaded', function () {
+				callback && callback();
+			});
+		} else {
 			callback && callback();
-		});
+		}
 		return page;
+	}
+	owner.preloads = function (idarr) {
+		var pl = function (index) {
+			var id = idarr[index];
+			if (id) {
+				var url = owner.pages[id];
+				var page = plus.webview.getWebviewById(id);
+				if (page) {
+					pl(index + 1);
+				} else {
+					page = mui.preload({ 'id': id, 'url': url });
+					page.addEventListener('loaded', function () {
+						pl(index + 1);
+					});
+				}	
+			}
+		}
+		pl(0);
 	}
 	/**
 	 * 打开预加载页面，并向页面发送一个自定义事件
@@ -59,9 +125,18 @@
 	 */
 	owner.openPreload = function (id, params) {
 		setTimeout(function () {
-			var page = plus.webview.getWebviewById(id);
-			page.show(owner.option.pageInAnimt);
-			$.fire(page, owner.option.pageInitEventName, params || '');
+			var page = plus.webview.getWebviewById(id+'');
+			if (page) {
+				page.show(owner.option.pageInAnimt);
+				$.fire(page, owner.option.pageInitEventName, params || '');
+			} else {
+				var url = owner.pages[id];
+				page = mui.preload({ 'id': id, 'url': url });
+				page.addEventListener('loaded', function () {
+					page.show(owner.option.pageInAnimt);
+					$.fire(page, owner.option.pageInitEventName, params || '');
+				});
+			}
 		}, 50);
 	}
 	/**
@@ -216,5 +291,30 @@
             resolution: res,
             format: fmt
         });
+    }
+    owner.showImage = function (url) {
+    	if (url) {
+    		if (url.indexOf('http') === 0) {
+    			var wait = plus.nativeUI.showWaiting('图片加载中...');
+    			var img = new Image();
+				img.src = url;
+				img.onload = function () {
+					plus.nativeUI.previewImage([url]);
+					wait.close();
+				};
+				img.onerror = function () {
+					plus.nativeUI.toast('图片加载失败！');
+					wait.close();
+				};
+    		} else {
+    			plus.nativeUI.previewImage([url]);
+    		}
+    	} else {
+    		plus.nativeUI.toast('无效的图片地址！');
+    	}
+    	
+		
+		
+		
     }
 }(mui, window.app={}));

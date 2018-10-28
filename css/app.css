@@ -82,6 +82,12 @@ div[placeholder]:empty:before {
 
 /* 自定义li */
 
+.mui-table-view::before,
+.mui-table-view::after,
+.mui-table-view>.mui-table-view-cell::after {
+	background-color: #eee!important;
+}
+
 .mui-table-view.cust {
 	margin-bottom: 10px;
 }
@@ -185,7 +191,19 @@ div[placeholder]:empty:before {
 	padding-right: 0;
 	vertical-align: middle;
 }
-
+.mui-table-view.cust>.mui-table-view-cell.unit {
+	padding-right: 0;
+}
+.mui-table-view.cust>.mui-table-view-cell.unit .mui-pull-right:nth-of-type(1) {
+	width: 64px;
+	text-align: center;
+	border-left: solid 1px #c8c7cc;
+	border-radius: 0;
+}
+.mui-table-view.cust>.mui-table-view-cell.unit .mui-pull-right:nth-of-type(2) {
+	width: calc(100% - 100px - 5px - 64px);
+	padding-right: 10px;
+}
 
 
 
@@ -229,6 +247,9 @@ div[placeholder]:empty:before {
 	filter: sepia(50%);
 }
 
+.mui-slider-item {
+	border-bottom: 0!important;
+}
 
 /*下拉滚动条样式 V */
 
@@ -274,16 +295,6 @@ div[placeholder]:empty:before {
 	-webkit-transition-duration: 400ms;
 	transition-duration: 400ms;
 	margin: 0;
-}
-
-
-/*.mui-pull-top-wrapper .mui-icon,
-			.mui-pull-top-wrapper .mui-spinner {
-				margin-top: 7px;
-			}*/
-
-.mui-pull-top-wrapper .mui-icon.mui-reverse {
-	/*-webkit-transform: rotate(180deg) translateZ(0);*/
 }
 
 .mui-pull-bottom-tips {
